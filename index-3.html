@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MCVault | Minecraft Bedrock</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap');
+*{box-sizing:border-box}
+body{margin:0;font-family:Prompt,Arial,sans-serif;background:#080a0d;color:#fff}
+a{text-decoration:none;color:inherit}
+.hero{min-height:390px;padding:28px 7%;display:flex;align-items:center;background:
+linear-gradient(90deg,rgba(8,10,13,.98),rgba(8,10,13,.55),rgba(8,10,13,.9)),
+radial-gradient(circle at 75% 35%,#334155 0,#111827 32%,#080a0d 70%);border-bottom:1px solid #20252d}
+.nav{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:auto;width:100%}
+.logo{font-weight:700;font-size:24px;letter-spacing:.5px}.logo span{color:#8b5cf6}
+.hero-content{max-width:1200px;width:100%;margin:auto}.hero h1{font-size:48px;line-height:1.1;margin:65px 0 12px}.hero p{color:#aeb5c0;max-width:600px;font-size:16px}
+.wrap{max-width:1200px;margin:auto;padding:35px 7%}
+.search{width:100%;padding:17px 20px;background:#11151b;border:1px solid #292f39;border-radius:14px;color:#fff;font-size:15px;outline:none}
+.search:focus{border-color:#8b5cf6}
+.categories{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0 30px}
+.category{padding:20px;border:1px solid #292f39;border-radius:15px;background:#10141a;cursor:pointer;transition:.2s}
+.category:hover,.category.active{border-color:#8b5cf6;background:#15121d}
+.icon{font-size:25px}.category b{display:block;margin-top:8px}.category small{color:#858e9b}
+.heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.heading h2{margin:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:18px}
+.card{background:#10141a;border:1px solid #272d36;border-radius:16px;overflow:hidden;transition:.2s}
+.card:hover{transform:translateY(-3px);border-color:#555d6a}
+.thumb{height:160px;background:linear-gradient(135deg,#252b35,#11151a);display:flex;align-items:center;justify-content:center;font-size:42px;position:relative}
+.type{position:absolute;left:12px;top:12px;background:rgba(0,0,0,.7);padding:5px 9px;border-radius:8px;font-size:11px}
+.info{padding:17px}.info h3{margin:0 0 6px;font-size:18px}.info p{margin:0;color:#929aa6;font-size:13px;height:42px;overflow:hidden}
+.meta{display:flex;justify-content:space-between;color:#6f7885;font-size:11px;margin:15px 0}.btn{display:block;text-align:center;padding:11px;border-radius:10px;background:#fff;color:#080a0d;font-weight:600;font-size:13px}
+.empty{text-align:center;color:#727b88;padding:50px;display:none}
+footer{border-top:1px solid #20252d;text-align:center;color:#626b78;padding:30px;margin-top:40px}
+@media(max-width:650px){.hero{min-height:350px}.hero h1{font-size:35px}.categories{grid-template-columns:1fr}.wrap{padding-left:5%;padding-right:5%}}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="nav">
+      <div class="logo">MC<span>Vault</span></div>
+      <a href="https://discord.gg/P4KSbBMzRF" target="_blank" rel="noopener" style="border:1px solid #3b4350;padding:9px 13px;border-radius:10px;font-size:12px;background:#11151b">💬 Discord</a>
+    </div>
+    <h1>ค้นพบสิ่งใหม่<br>สำหรับ Minecraft</h1>
+    <p>คลังรวม Texture Pack, Add-on และ Map สำหรับ Minecraft Bedrock ที่รวบรวมไว้ในที่เดียว</p>
+  </div>
+</section>
+
+<main class="wrap">
+  <input id="search" class="search" placeholder="🔎  ค้นหา Texture Pack, Add-on หรือ Map...">
+
+  <div class="categories">
+    <div class="category active" data-cat="all">
+      <div class="icon">◈</div><b>ทั้งหมด</b><small>ดูทุกผลงาน</small>
+    </div>
+    <div class="category" data-cat="texture">
+      <div class="icon">▣</div><b>Texture Pack</b><small>เปลี่ยนภาพและบรรยากาศในเกม</small>
+    </div>
+    <div class="category" data-cat="addon">
+      <div class="icon">⚔</div><b>Add-on</b><small>เพิ่มระบบ มอนสเตอร์ และไอเทม</small>
+    </div>
+    <div class="category" data-cat="map">
+      <div class="icon">◇</div><b>Map</b><small>โลกและแผนที่สำหรับเล่น</small>
+    </div>
+  </div>
+
+  <div class="heading"><h2 id="title">ผลงานทั้งหมด</h2><span id="count" style="color:#68717e;font-size:13px"></span></div>
+  <section id="grid" class="grid"></section>
+  <div id="empty" class="empty">ไม่พบรายการที่ค้นหา</div>
+</main>
+
+<footer>
+  <div style="margin-bottom:10px">
+    <a href="https://discord.gg/P4KSbBMzRF" target="_blank" rel="noopener" style="color:#b9a7ff">💬 เข้าร่วม Discord Community</a>
+  </div>
+  <div>MCVault • Minecraft Bedrock Community</div>
+  <div style="font-size:11px;margin-top:8px;color:#454d59">ระบบกรองลิงก์โฆษณาเปิดใช้งาน</div>
+</footer>
+
+
+<script>
+/* Anti-ad filter: blocks common unsolicited promotional/spam links in searchable content. */
+const AD_PATTERNS = [
+  /\b(?:bit\.ly|tinyurl\.com|cutt\.ly|t\.me\/|discord\.gg\/(?!P4KSbBMzRF)|wa\.me\/)/i,
+  /\b(?:buy now|cheap|free nitro|แจก\s*ฟรี|ขายไอดี|รับซื้อ|เติมเกมราคาถูก|สมัครรับเงินฟรี)\b/i,
+  /\b(?:casino|พนัน|เว็บตรง|สล็อต|เครดิตฟรี|บาคาร่า)\b/i
+];
+function looksLikeAd(text){
+  return AD_PATTERNS.some(re => re.test(text));
+}
+</script>
+
+<script>
+const mods=[
+ {name:"Newb X Unwind",cat:"texture",desc:"Texture Pack สำหรับปรับบรรยากาศและภาพภายในเกม",ver:"1.21.x",file:"#",icon:"▣"},
+ {name:"Realistic Adventure",cat:"addon",desc:"Add-on ตัวอย่างสำหรับเพิ่มเนื้อหาในโลก Survival",ver:"1.21.x",file:"#",icon:"⚔"},
+ {name:"Survival World",cat:"map",desc:"แผนที่ตัวอย่างสำหรับเริ่มต้นโลก Survival",ver:"1.21.x",file:"#",icon:"◇"}
+];
+
+const grid=document.getElementById("grid"),search=document.getElementById("search"),empty=document.getElementById("empty"),count=document.getElementById("count"),title=document.getElementById("title");
+let cat="all";
+const names={all:"ผลงานทั้งหมด",texture:"Texture Pack",addon:"Add-on",map:"Map"};
+
+function draw(){
+ const q=search.value.trim().toLowerCase();
+ const list=mods.filter(x=>
+  !looksLikeAd(x.name+" "+x.desc+" "+x.file) &&
+  (cat==="all"||x.cat===cat) &&
+  (x.name+" "+x.desc).toLowerCase().includes(q)
+);
+ title.textContent=names[cat]; count.textContent=list.length+" รายการ";
+ grid.innerHTML=list.map(x=>`
+ <article class="card">
+  <div class="thumb"><span class="type">${names[x.cat]}</span>${x.icon}</div>
+  <div class="info">
+   <h3>${x.name}</h3><p>${x.desc}</p>
+   <div class="meta"><span>Bedrock ${x.ver}</span><span>MCVault</span></div>
+   <a class="btn" href="${x.file}" download>ดาวน์โหลด</a>
+  </div>
+ </article>`).join("");
+ empty.style.display=list.length?"none":"block";
+}
+document.querySelectorAll(".category").forEach(el=>el.onclick=()=>{
+ document.querySelectorAll(".category").forEach(x=>x.classList.remove("active"));
+ el.classList.add("active");cat=el.dataset.cat;draw();
+});
+search.oninput=draw;draw();
+</script>
+</body>
+</html>
